@@ -11,8 +11,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    String[] colors=new String[]{"1-  Kahverengi","2-  Kırmızı","3-  Turuncu","4-  Sarı","5-  Yeşil","6-  Mavi","7-  Mor","8-  Gri","9-  Beyaz"};
-    String[] colors2 =new String[]{"0-  Siyah","1-  Kahverengi","2-  Kırmızı","3-  Turuncu","4-  Sarı","5-  Yeşil","6-  Mavi","7-  Mor","8-  Gri","9-  Beyaz"};
+    String[] colors=new String[9];
+    String[] colors2 =new String[10];
     String[] colors3 =new String[]{"(BOŞ)","0-  Siyah","1-  Kahverengi","2-  Kırmızı","3-  Turuncu","4-  Sarı","5-  Yeşil","6-  Mavi","7-  Mor","8-  Gri","9-  Beyaz"};
     String[] textColors=new String[]{"#000000","#4C2525","#FF0606","#F4511E","#FFB300","#43A047","#1E88E5","#5E35B1","#565459","#9E9AA5"};
     Spinner spinner1,spinner2,spinner3;
@@ -22,6 +22,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        for (int i=2;i<colors3.length;i++){ // Birinci bant renk listesi
+            colors[i-2]=colors3[i];
+        }
+        for (int i=1;i<colors3.length;i++){ // İkinci bant renk listesi
+            colors2[i-1]=colors3[i];
+        }
         first=1; second=0; third=20;
         resOne=findViewById(R.id.resOne);
         resTwo=findViewById(R.id.resTwo);
@@ -34,13 +40,10 @@ public class MainActivity extends AppCompatActivity {
         spinner2=findViewById(R.id.spinner2);
         spinner3=findViewById(R.id.spinner3);
         ArrayAdapter<String>arrayAdapter1=new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,colors);
-        arrayAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(arrayAdapter1);
         ArrayAdapter<String> arrayAdapter2=new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item, colors2);
-        arrayAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2.setAdapter(arrayAdapter2);
         ArrayAdapter<String>arrayAdapter3=new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item, colors3);
-        arrayAdapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner3.setAdapter(arrayAdapter3);
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -112,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         if (third!=20){
             result= ((first*10)+second)*(int) (Math.pow(10,third));
             resultText.setText(first+""+second+" x "+"(10 üzeri "+third+") = "+result+"Ω (Ohm)");
-        }else{
+        }else{ // Üçüncü bant boşsa third değeri 20 gelir hesaplama yolu değişir..
             result=(first)*(int)(Math.pow(10,second));
             resultText.setText(first+" x (10 üzeri "+second+") = "+result+"Ω (Ohm)");
         }
